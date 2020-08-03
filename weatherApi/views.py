@@ -1,15 +1,14 @@
-import json
-from datetime import time
-
-
 from bs4 import BeautifulSoup
-from distlib.compat import raw_input
 from django.http import Http404
+from django.http import HttpResponse, HttpResponseNotFound
+import datetime
 from django.shortcuts import render
 import requests
-
+from django.contrib import messages
 
 # Create your views here.
+from django.template import loader, Context
+
 
 def getHtmlContent(city):
     USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
@@ -36,20 +35,17 @@ def home(request):
         # parse the html content into human readable data in order to be able to present it to the user.
         soup = BeautifulSoup(htmlContent, 'html.parser')
 
-        def getRegion(tem):
-            try:
-                tem = soup.find('span', attrs={'id': 'wob_tm'})
-            except ArithmeticError as e:
-                return None
-            return tem
-
         weatherData = dict()
 
-        weatherData['temp'] = getRegion(soup)
-        while weatherData['temp'] is None:
-            raise Http404('Location Not Found')
-            continue
-            home(request)
+        # checking to confirm if getHtmlContent returned some data for us "this handles if a place doesn't exits"
+        try:
+            tem = soup.find('span', attrs={'id': 'wob_tm'})  # I'm using the temperature value to do it.
+        except ArithmeticError as e:
+            return None
+        else:
+            weatherData['temp'] = tem
+            while weatherData['temp'] is None:  # if it's 'True' that means no data returned so the place wasn't found.
+                return render(request, 'weatherApi/404.html')
 
         weatherData['region'] = soup.find('div', attrs={'id': 'wob_loc'}).text
         weatherData['timeOfTheDay'] = soup.find('div', attrs={'id': 'wob_dts'}).text
@@ -70,3 +66,7 @@ def home(request):
 
     return render(request, 'weatherApi/home.html', {'weather': weatherData})
 
+# def current_datetime(request):
+#     now = datetime.datetime.now()
+#     html = "<html><body>It is now %s.</body></html>" % now
+#     return HttpResponse(html)
