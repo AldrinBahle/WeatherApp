@@ -1,13 +1,6 @@
 from bs4 import BeautifulSoup
-from django.http import Http404
-from django.http import HttpResponse, HttpResponseNotFound
-import datetime
 from django.shortcuts import render
 import requests
-from django.contrib import messages
-
-# Create your views here.
-from django.template import loader, Context
 
 
 def getHtmlContent(city):
@@ -65,8 +58,3 @@ def home(request):
             break
 
     return render(request, 'weatherApi/home.html', {'weather': weatherData})
-
-# def current_datetime(request):
-#     now = datetime.datetime.now()
-#     html = "<html><body>It is now %s.</body></html>" % now
-#     return HttpResponse(html)
