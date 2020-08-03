@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 from django.shortcuts import render
+from datetime import datetime
 import requests
+
 
 
 def getHtmlContent(city):
@@ -41,7 +43,7 @@ def home(request):
                 return render(request, 'weatherApi/404.html')
 
         weatherData['region'] = soup.find('div', attrs={'id': 'wob_loc'}).text
-        weatherData['timeOfTheDay'] = soup.find('div', attrs={'id': 'wob_dts'}).text
+        weatherData['timeOfTheDay'] = datetime.now().strftime('%a, %Y/%m/%d, %H:%M %p')
         weatherData['weatherStatus'] = soup.find('span', attrs={'id': 'wob_dc'}).text
         weatherData['temperature'] = soup.find('span', attrs={'id': 'wob_tm'}).text
 

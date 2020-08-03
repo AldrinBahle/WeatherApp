@@ -52,6 +52,24 @@
             cursor: grab;
             text-transform: uppercase;
         }
+
+        footer {
+            background: darkblue;
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100px;
+        }
+
+        footer p {
+            color: darkblue;
+            padding: 10px;
+            margin: 50px;
+            height: auto;
+            width: 90%;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -73,5 +91,9 @@
             <h3>{{ weather.weatherStatus }}</h3>
         {% endif %}
     </div>
+    <footer class = "footer">
+        <p>© Weather App done by Aldrin Gama 2020</p><br>
+{#        <p>Email: gamaaldrin@gmail.com</p>#}
+    </footer>
 </body>
 </html>
