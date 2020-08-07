@@ -94,10 +94,10 @@
              <h3>{{ weather.date }}</h3>
             <h3>The current weather in <b>{{ weather.region }}</b> is:</h3>
             <h3>Real feel: {{ weather.temperature }}°C</h3>
+            <h3>High {{ weather.maxTemp }}°C & Low {{ weather.minTemp }}°C</h3>
             <h3>Precipitation: {{ weather.precipitation }}</h3>
             <h3>Humidity: {{ weather.humidity }}</h3>
             <h3>Wind Speed:  {{ weather.wind }}</h3>
-            <h3>High {{ weather.maxTemp }}°C & Low {{ weather.minTemp }}°C</h3>
             <h3>{{ weather.weatherStatus }}</h3>
         {% endif %}
     </div>
